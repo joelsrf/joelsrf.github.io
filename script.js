@@ -2,11 +2,11 @@
 // They are fetched via the `corsproxy.io` service so that the data can be
 // retrieved directly by the browser.
 const speedUrl =
-  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
+  'https://corsproxy.io/?key=153afd72&url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
 const gustUrl =
-  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-wind-boeenspitze-kmh-10min/stationsTable.messwerte-wind-boeenspitze-kmh-10min.de.json';
+  'https://corsproxy.io/?key=153afd72&url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-wind-boeenspitze-kmh-10min/stationsTable.messwerte-wind-boeenspitze-kmh-10min.de.json';
 const pastUrl =
-  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
+  'https://corsproxy.io/?key=153afd72&url=https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
 
 function findByStationId(data, id) {
   if (Array.isArray(data)) {
