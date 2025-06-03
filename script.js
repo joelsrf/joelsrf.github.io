@@ -6,7 +6,7 @@ const speedUrl = 'data/wind.json';
 // The gust and past wind speed values are still attempted from the remote
 // sources. These requests may fail in restricted environments but are kept so
 // that the page works when network access is allowed.
-const gustUrl = 'https://corsproxy.io/?https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
+const gustUrl = 'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
 const pastUrl = 'https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
 
 function findByStationName(data, name) {
