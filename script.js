@@ -8,18 +8,18 @@ const gustUrl =
 const pastUrl =
   'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
 
-function findByStationName(data, name) {
+function findByStationId(data, id) {
   if (Array.isArray(data)) {
     for (const item of data) {
-      const res = findByStationName(item, name);
+      const res = findByStationId(item, id);
       if (res) return res;
     }
   } else if (data && typeof data === 'object') {
-    if (data.station_name === name) {
+    if (data.id === id) {
       return data;
     }
     for (const key in data) {
-      const res = findByStationName(data[key], name);
+      const res = findByStationId(data[key], id);
       if (res) return res;
     }
   }
@@ -30,6 +30,12 @@ function extractSeries(data) {
   if (!data) return [];
   if (Array.isArray(data.series)) {
     return data.series;
+  }
+  if (data.series && typeof data.series === 'object') {
+    for (const key in data.series) {
+      const val = data.series[key];
+      if (Array.isArray(val)) return val;
+    }
   }
   for (const key in data) {
     const res = extractSeries(data[key]);
@@ -72,8 +78,8 @@ async function loadData() {
       console.warn('Failed to fetch past data:', e);
     }
 
-    const speed = findByStationName(speedData, 'HOE');
-    const gust = findByStationName(gustData, 'HOE');
+    const speed = findByStationId(speedData, 'HOE');
+    const gust = findByStationId(gustData, 'HOE');
     const pastSeries = extractSeries(pastData);
 
     if (speed && speed.current) {
