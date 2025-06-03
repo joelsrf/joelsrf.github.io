@@ -44,6 +44,21 @@ function extractSeries(data) {
   return [];
 }
 
+function normalizeEntry(entry) {
+  if (Array.isArray(entry)) {
+    return entry;
+  }
+  if (entry && typeof entry === 'object') {
+    const ts = entry.timestamp || entry.time || entry.date || entry[0];
+    const val =
+      entry.value !== undefined ? entry.value : entry[1] !== undefined ? entry[1] : entry.y;
+    if (ts !== undefined && val !== undefined) {
+      return [ts, val];
+    }
+  }
+  return [];
+}
+
 function updateRow(row, value) {
   row.querySelector('.value').textContent = value;
   updateIndicator(row.querySelector('.indicator'), Number(value));
@@ -96,8 +111,8 @@ async function loadData() {
     }
 
     const pastBody = document.querySelector('#past-table tbody');
-    pastSeries.slice(-24).forEach(entry => {
-      const [timestamp, value] = entry;
+    pastSeries.slice(-24).forEach(raw => {
+      const [timestamp, value] = normalizeEntry(raw);
       const tr = document.createElement('tr');
       const date = new Date(timestamp * 1000);
       tr.innerHTML = `
