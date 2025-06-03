@@ -1,13 +1,12 @@
-// Use a local copy of the wind speed data for the Hörnli station.
-// The file is located under `data/wind.json` and contains the JSON snippet
-// from MeteoSchweiz with the current measurement for the station.
-const speedUrl = 'data/wind.json';
-
-// The gust and past wind speed values are still attempted from the remote
-// sources. These requests may fail in restricted environments but are kept so
-// that the page works when network access is allowed.
-const gustUrl = 'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
-const pastUrl = 'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
+// URLs for current wind speed, gusts and past measurements from MeteoSchweiz.
+// They are fetched via the `corsproxy.io` service so that the data can be
+// retrieved directly by the browser.
+const speedUrl =
+  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
+const gustUrl =
+  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-wind-boeenspitze-kmh-10min/stationsTable.messwerte-wind-boeenspitze-kmh-10min.de.json';
+const pastUrl =
+  'https://corsproxy.io/?url=https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
 
 function findByStationName(data, name) {
   if (Array.isArray(data)) {
@@ -52,7 +51,7 @@ function updateIndicator(el, value) {
 
 async function loadData() {
   try {
-    // Always load the current wind speed from the local JSON file.
+    // Fetch the current wind speed for the Hörnli station.
     const speedRes = await fetch(speedUrl);
     const speedData = await speedRes.json();
 
