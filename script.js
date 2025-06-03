@@ -1,4 +1,11 @@
-const speedUrl = 'https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-windgeschwindigkeit-kmh-10min/stationsTable.messwerte-windgeschwindigkeit-kmh-10min.de.json';
+// Use a local copy of the wind speed data for the Hörnli station.
+// The file is located under `data/wind.json` and contains the JSON snippet
+// from MeteoSchweiz with the current measurement for the station.
+const speedUrl = 'data/wind.json';
+
+// The gust and past wind speed values are still attempted from the remote
+// sources. These requests may fail in restricted environments but are kept so
+// that the page works when network access is allowed.
 const gustUrl = 'https://www.meteoschweiz.admin.ch/product/output/measured-values/stationsTable/messwerte-wind-boeenspitze-kmh-10min/stationsTable.messwerte-wind-boeenspitze-kmh-10min.de.json';
 const pastUrl = 'https://www.meteoschweiz.admin.ch/product/output/measured-values/chartData/wind_hour/chartData.wind_hour.HOE.de.json';
 
@@ -45,22 +52,43 @@ function updateIndicator(el, value) {
 
 async function loadData() {
   try {
-    const [speedRes, gustRes, pastRes] = await Promise.all([
-      fetch(speedUrl),
-      fetch(gustUrl),
-      fetch(pastUrl)
-    ]);
-
+    // Always load the current wind speed from the local JSON file.
+    const speedRes = await fetch(speedUrl);
     const speedData = await speedRes.json();
-    const gustData = await gustRes.json();
-    const pastData = await pastRes.json();
+
+    // Try to load gust and past data from the remote sources. These may fail
+    // due to network restrictions, in which case empty objects are used.
+    let gustData = {};
+    let pastData = {};
+    try {
+      const gr = await fetch(gustUrl);
+      gustData = await gr.json();
+    } catch (e) {
+      console.warn('Failed to fetch gust data:', e);
+    }
+    try {
+      const pr = await fetch(pastUrl);
+      pastData = await pr.json();
+    } catch (e) {
+      console.warn('Failed to fetch past data:', e);
+    }
 
     const speed = findByStationName(speedData, 'H\u00f6rnli');
     const gust = findByStationName(gustData, 'H\u00f6rnli');
     const pastSeries = extractSeries(pastData);
 
-    if (speed) updateRow(document.getElementById('current-speed'), speed.value);
-    if (gust) updateRow(document.getElementById('current-gust'), gust.value);
+    if (speed && speed.current) {
+      updateRow(
+        document.getElementById('current-speed'),
+        speed.current.value
+      );
+    }
+    if (gust && gust.current) {
+      updateRow(
+        document.getElementById('current-gust'),
+        gust.current.value
+      );
+    }
 
     const pastBody = document.querySelector('#past-table tbody');
     pastSeries.slice(-24).forEach(entry => {
