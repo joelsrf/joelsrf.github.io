@@ -72,8 +72,8 @@ async function loadData() {
       console.warn('Failed to fetch past data:', e);
     }
 
-    const speed = findByStationName(speedData, 'H\u00f6rnli');
-    const gust = findByStationName(gustData, 'H\u00f6rnli');
+    const speed = findByStationName(speedData, 'HOE');
+    const gust = findByStationName(gustData, 'HOE');
     const pastSeries = extractSeries(pastData);
 
     if (speed && speed.current) {
