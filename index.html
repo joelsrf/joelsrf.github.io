@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wind Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Wind Data (Hörnli)</h1>
+    <table id="wind-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Value (km/h)</th>
+          <th>Indicator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="current-speed">
+          <td>Current Wind Speed</td>
+          <td class="value"></td>
+          <td class="indicator"></td>
+        </tr>
+        <tr id="current-gust">
+          <td>Current Wind Gust</td>
+          <td class="value"></td>
+          <td class="indicator"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Past Wind Speeds (Last 24h)</h2>
+    <table id="past-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Speed (km/h)</th>
+          <th>Indicator</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script src="script.js"></script>
+</body>
+</html>
