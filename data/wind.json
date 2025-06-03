@@ -1,0 +1,23 @@
+{
+  "stations": [
+    {
+      "network": "messwerte-windgeschwindigkeit-kmh-10min",
+      "network_type": "messnetz-automatisch",
+      "station_name": "H\u00f6rnli",
+      "id": "HOE",
+      "current": {
+        "value": "17.6",
+        "wind_direction": 113,
+        "date": 1748977200000,
+        "label": "Aktueller Messwert",
+        "summary": "Windgeschwindigkeit, gemessen am 3.6.2025, 21:00 auf 1145 m \u00fc. M."
+      },
+      "station_type": "Wetterstation",
+      "altitude": "1145",
+      "measurement_height": "15.11 m",
+      "coordinates": [2713504, 1247758],
+      "latlong": [47.370878, 8.941472],
+      "canton": "ZH"
+    }
+  ]
+}
